@@ -758,7 +758,7 @@
 						<div class="block2-pic hov-img0">
 							<img src="images/product-08.png" alt="IMG-PRODUCT">
 
-							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal2">
+							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 								Detalji
 							</a>
 						</div>
@@ -1221,7 +1221,7 @@
 								<div class="slick3 gallery-lb">
 									<div class="item-slick3" data-thumb="images/product-03.png">
 										<div class="wrap-pic-w pos-relative">
-											<img src="images/product-03.png" alt="IMG-PRODUCT">
+											<img src="images/product-03.png" alt="IMG-PRODUCT" id="velikaSlika">
 
 											<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-01.png">
 												<i class="fa fa-expand"></i>
@@ -1237,15 +1237,15 @@
 					
 					<div class="col-md-6 col-lg-5 p-b-30">
 						<div class="p-r-50 p-t-5 p-lr-0-lg">
-							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+							<h4 id="imeProizvoda"class="mtext-105 cl2 js-name-detail p-b-14">
 								Adidas sportske patike
 							</h4>
 
-							<span class="mtext-106 cl2">
+							<span id="cijena" class="mtext-106 cl2">
 								49.99KM
 							</span>
 
-							<p class="stext-102 cl3 p-t-23">
+							<p id="opis" class="stext-102 cl3 p-t-23">
 								Ove Nike patike su dostupne u par boja i veličina.
 							</p>
 							
@@ -1534,6 +1534,20 @@
 				$(this).off('click');
 			});
 		});
+		$('.js-show-modal1').click(function() {
+ 	 var productName = $(this).closest('.block2').find('.js-name-b2').text();
+ 	 var productPrice = $(this).closest('.block2').find('.stext-105').text();
+ 	 var productImage = $(this).closest('.block2').find('img').attr('src');
+  
+  
+ 	 $('#imeProizvoda').text(productName);
+  	 $('#cijena').text(productPrice);
+  	 $('#velikaSlika').attr('src', productImage);
+	
+	 $('#opis').text(productName + ' u nekoliko boja i veličina.');
+	
+	 console.log(productImage);
+     });
 
 		$('.js-addwish-detail').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
