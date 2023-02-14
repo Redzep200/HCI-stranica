@@ -99,7 +99,7 @@
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 
-						<a href="#" id="favoriteNumber" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="2">
+						<a href="#" id="favoriteNumber" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
 							<i class="zmdi zmdi-favorite-outline"></i>
 						</a>
 					</div>
@@ -1258,12 +1258,12 @@
 
 									<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time">
+											<select id="velicina" class="js-select2" name="time">
 												<option>Odaberite</option>
-												<option>39</option>
-												<option>40</option>
-												<option>41</option>
-												<option>42</option>
+												<option data-id="0">39</option>
+												<option data-id="1">40</option>
+												<option data-id="2">41</option>
+												<option data-id="3">42</option>
 											</select>
 											<div class="dropDownSelect2"></div>
 										</div>
@@ -1281,6 +1281,8 @@
 												<option>Odaberite</option>
 												<option>Crna</option>
 												<option>Bijela</option>
+												<option>Siva</option>
+												<option>Plava</option>
 												
 											</select>
 											<div class="dropDownSelect2"></div>
@@ -1539,15 +1541,14 @@
  	 var productPrice = $(this).closest('.block2').find('.stext-105').text();
  	 var productImage = $(this).closest('.block2').find('img').attr('src');
   
-  
  	 $('#imeProizvoda').text(productName);
   	 $('#cijena').text(productPrice);
   	 $('#velikaSlika').attr('src', productImage);
-	
+	   $("#velicina option[data-id='0']").attr("value", "new_value_0");
 	 $('#opis').text(productName + ' u nekoliko boja i veličina.');
 	
-	 console.log(productImage);
      });
+	 	
 
 		$('.js-addwish-detail').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();

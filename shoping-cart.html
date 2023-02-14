@@ -369,9 +369,9 @@
 
 						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Kod za popust">
+								<input id="kuponText" class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Kod za popust">
 									
-								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+								<div id="kuponDugme" class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
 									Iskoristi kod
 								</div>
 							</div>
@@ -411,7 +411,7 @@
 							</div>
 
 							<div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
-								<p class="stext-111 cl6 p-t-2">
+								<p id="numPostarina" class="stext-111 cl6 p-t-2">
 									0.00KM
 								</p>
 								
@@ -421,11 +421,11 @@
 									</span>
 
 									<div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-										<select class="js-select2" name="time">
-											<option>Odaberite državu...</option>
-											<option>BiH</option>
-											<option>Srbija</option>
-											<option>Hrvatska</option>
+										<select id="drzave" class="js-select2" name="time">
+											<option data-id="0">Odaberite državu...</option>
+											<option data-id="1">BiH</option>
+											<option data-id="2">Srbija</option>
+											<option data-id="3">Hrvatska</option>
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
@@ -439,7 +439,7 @@
 									</div>
 									
 									<div class="flex-w">
-										<div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
+										<div id="izracunaj" class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
 											Izračunaj
 										</div>
 									</div>
@@ -456,15 +456,15 @@
 							</div>
 
 							<div class="size-209 p-t-1">
-								<span class="mtext-110 cl2">
+								<span id="ukupno" class="mtext-110 cl2">
 									89.99KM
 								</span>
 							</div>
 						</div>
 
-						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+						<div id="kupovina" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 							Potvrdi kupovinu
-						</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -636,12 +636,53 @@
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor/select2/select2.min.js"></script>
+	<script src="vendor/sweetalert/sweetalert.min.js"></script>
 	<script>
 		$(".js-select2").each(function(){
 			$(this).select2({
 				minimumResultsForSearch: 20,
 				dropdownParent: $(this).next('.dropDownSelect2')
 			});
+		})
+
+		$("#izracunaj").click(function(){
+			var selectedOption = $("#drzave").find("option:selected");
+            var selectedOptionId = selectedOption.data("id");
+			var postarina;
+			var broj;
+			if(selectedOptionId === 1){
+				postarina = "0.00KM";
+				broj=0;
+			}
+			if(selectedOptionId === 2){
+				postarina = "10.00KM";
+				broj=10;
+			}
+			if(selectedOptionId === 3){
+				postarina = "5.00KM";
+				broj=5;
+			}
+			$("#numPostarina").text(postarina);
+			var ukupnaCijena = 89.99 + broj;
+			$("#ukupno").text(ukupnaCijena + 'KM');
+			$("#kuponText").val("");
+		})
+		$("#kuponDugme").click(function(){
+			var kod = $("#kuponText").val();
+			if(kod === "SNIZENJE"){
+			var ukupno=	$("#ukupno").text();
+			var num = parseFloat(ukupno.replace(/[^0-9\.]+/g,""));
+			var num2 = num - num/3;
+			$("#ukupno").text(num2.toFixed(2) + 'KM');
+			swal("Uspjeh","Uspješno iskorišten kupon!", "success");
+			}
+			if(kod === ""){
+				swal("Greška","Niste unijeli validan kod!","error");
+			}
+		})
+		$("#kupovina").click(function(){
+			var ukupno = $("#ukupno").text();
+			swal("Uspjeh","Uspješno dovršena kupovina za "+ukupno+"!","success");
 		})
 	</script>
 <!--===============================================================================================-->
